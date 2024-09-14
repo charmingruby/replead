@@ -1,0 +1,17 @@
+{
+  "name": "replead",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/charmingruby/replead.git",
+  "author": "charmingruby <mrrubycanal3105@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@rocketseat/eslint-config": "^2.2.2",
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^22.5.5",
+    "typescript": "^5.6.2"
+  }
+}
