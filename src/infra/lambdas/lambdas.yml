@@ -8,7 +8,7 @@ functions:
 
   populateLeads:
     handler: src/infra/lambdas/populate-dynamo/index.handler
-    timeout: 30
+    timeout: 25
     events:
       - httpApi:
           path: /populate-dynamo
