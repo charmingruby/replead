@@ -1,0 +1,15 @@
+functions:
+  hello:
+    handler: src/infra/lambdas/hello/index.handler
+    events:
+      - httpApi:
+          path: /
+          method: GET
+
+  populateLeads:
+    handler: src/infra/lambdas/populate-dynamo/index.handler
+    timeout: 30
+    events:
+      - httpApi:
+          path: /populate-dynamo
+          method: POST

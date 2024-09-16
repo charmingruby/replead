@@ -6,8 +6,19 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: sa-east-1
+  environment:
+    DYNAMO_LEADS_TABLE: !Ref LeadsTable
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:Scan
+          Resource:
+            - !GetAtt LeadsTable.Arn
 
-package: 
+package:
   individually: true
 
 build:
@@ -16,9 +27,9 @@ build:
     minify: true
     sourcemap: false
     exclude:
-      - '@aws/sdk/*'
+      - "@aws/sdk/*"
 
-functions: ${file(src/lambdas/lambdas.yml):functions}
+functions: ${file(src/infra/lambdas/lambdas.yml):functions}
 
 resources:
   Resources:

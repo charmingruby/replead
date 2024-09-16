@@ -1,4 +1,4 @@
-import { Response } from '@/lambdas/shared/response'
+import { Response } from '@/infra/lambdas/shared/response'
 import { APIGatewayProxyEventV2 } from 'aws-lambda'
 
 export async function handler(_event: APIGatewayProxyEventV2) {

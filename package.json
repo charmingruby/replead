@@ -6,6 +6,8 @@
   "author": "charmingruby <mrrubycanal3105@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.651.1",
+    "@faker-js/faker": "^9.0.1",
     "zod": "^3.23.8"
   },
   "devDependencies": {

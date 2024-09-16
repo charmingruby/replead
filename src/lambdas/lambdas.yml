@@ -1,7 +1,0 @@
-functions:
-  hello:
-    handler: src/lambdas/hello/index.handler
-    events:
-      - httpApi:
-          path: /
-          method: GET
