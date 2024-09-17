@@ -19,7 +19,10 @@ provider:
             - dynamodb:Scan
           Resource:
             - !GetAtt LeadsTable.Arn
-
+        - Effect: Allow
+          Action:
+            - sqs:SendMessage
+          Resource: !GetAtt GenerateReportQueue.Arn
 package:
   individually: true
 
@@ -50,7 +53,7 @@ resources:
     GenerateReportQueue:
       Type: AWS::SQS::Queue
       Properties:
-        QueueName: GenerateReporQueue
+        QueueName: GenerateReportQueue
         ReceiveMessageWaitTimeSeconds: 20
         VisibilityTimeout: 180
         RedrivePolicy:
