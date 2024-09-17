@@ -6,6 +6,7 @@ provider:
   name: aws
   runtime: nodejs20.x
   region: sa-east-1
+  memorySize: 128
   environment:
     DYNAMO_LEADS_TABLE: !Ref LeadsTable
   iam:
