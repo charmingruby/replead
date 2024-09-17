@@ -9,6 +9,7 @@ provider:
   memorySize: 128
   environment:
     DYNAMO_LEADS_TABLE: !Ref LeadsTable
+    GENERATE_REPORT_QUEUE_URL: !Ref GenerateReportQueue
   iam:
     role:
       statements:

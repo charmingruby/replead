@@ -13,3 +13,11 @@ functions:
       - httpApi:
           path: /populate-dynamo
           method: POST
+
+  generateReport:
+    handler: src/infra/lambdas/generate-report/index.handler
+    timeout: 25
+    events:
+      - httpApi:
+          path: /generate-report
+          method: POST
