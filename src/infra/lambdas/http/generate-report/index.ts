@@ -1,11 +1,11 @@
 import { APIGatewayProxyEventV2 } from 'aws-lambda'
 import { z } from 'zod'
-import { parseBody } from '../shared/validation/body-parser'
 import { InvalidPayloadError } from '@/core/errors/invalid-payload-error'
-import { Response } from '../shared/response'
 import { GenerateReportService } from './service'
 import { sqsClient } from '@/infra/messaging/sqs/client'
 import { GenerateReportSQSQueue } from '@/infra/messaging/sqs/generate-report-queue'
+import { parseBody } from '../../shared/validation/body-parser'
+import { Response } from '../../shared/response'
 
 const generateReportSchema = z.object({
   userId: z.string({ required_error: 'userId is required' }).min(1),

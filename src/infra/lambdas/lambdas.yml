@@ -1,13 +1,13 @@
 functions:
   hello:
-    handler: src/infra/lambdas/hello/index.handler
+    handler: src/infra/lambdas/http/hello/index.handler
     events:
       - httpApi:
           path: /
           method: GET
 
   populateLeads:
-    handler: src/infra/lambdas/populate-dynamo/index.handler
+    handler: src/infra/lambdas/http/populate-dynamo/index.handler
     timeout: 25
     events:
       - httpApi:
@@ -15,9 +15,16 @@ functions:
           method: POST
 
   generateReport:
-    handler: src/infra/lambdas/generate-report/index.handler
-    timeout: 25
+    handler: src/infra/lambdas/http/generate-report/index.handler
     events:
       - httpApi:
           path: /generate-report
           method: POST
+
+  processReport:
+    handler: src/infra/lambdas/queues/process-report/index.handler
+    timeout: 25
+    events:
+      - sqs:
+          arn: !GetAtt GenerateReportQueue.Arn
+          batchSize: 1
