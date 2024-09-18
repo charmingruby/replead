@@ -37,31 +37,6 @@ build:
 functions: ${file(src/infra/lambdas/lambdas.yml):functions}
 
 resources:
-  Resources:
-    LeadsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: "LeadsTable"
-        BillingMode: "PAY_PER_REQUEST"
-        AttributeDefinitions:
-          - AttributeName: "id"
-            AttributeType: "S"
-        KeySchema:
-          - AttributeName: "id"
-            KeyType: "HASH"
-
-    GenerateReportQueue:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: GenerateReportQueue
-        ReceiveMessageWaitTimeSeconds: 20
-        VisibilityTimeout: 180
-        RedrivePolicy:
-          deadLetterTargetArn: !GetAtt GenerateReportQueueDLQ.Arn
-          maxReceiveCount: 2
-
-    GenerateReportQueueDLQ:
-      Type: AWS::SQS::Queue
-      Properties:
-        QueueName: GenerateReportQueueDLQ
-        MessageRetentionPeriod: 1209600 # 14 days
+  - ${file(./resources/dynamo/LeadsTable.yml)}
+  - ${file(./resources/sqs/GenerateReportQueue.yml)}
+  - ${file(./resources/s3/ReportsBucket.yml)}
