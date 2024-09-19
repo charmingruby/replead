@@ -1,7 +1,7 @@
-import { Lead } from '@/domain/entity/lead'
+import { Lead } from '@/domain/entities/lead'
 import { AttributeValue } from '@aws-sdk/client-dynamodb'
 
-type DynamoLead = {
+export type DynamoLead = {
   id: AttributeValue
   name: AttributeValue
   email: AttributeValue
@@ -19,11 +19,13 @@ export class DynamoLeadsMapper {
   }
 
   static toDomain(dynamoLead: DynamoLead): Lead {
-    return {
-      id: dynamoLead.id.S,
+    const lead = new Lead({
       name: dynamoLead.name.S,
       email: dynamoLead.email.S,
       jobTitle: dynamoLead.jobTitle.S,
-    }
+    })
+    lead.id = dynamoLead.id.S
+
+    return lead
   }
 }

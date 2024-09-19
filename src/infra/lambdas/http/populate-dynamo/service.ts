@@ -1,10 +1,8 @@
 import { Lead } from '@/domain/entities/lead'
-import { DynamoLeadsRepository } from '@/infra/database/dynamo/repositories/dynamo-leads-repository'
 import { faker } from '@faker-js/faker'
+import * as DynamoLeadsRepo from '@/infra/database/dynamo/repositories/dynamo-leads-repository'
 
 export class PopulateDynamoService {
-  constructor(private readonly leadsRepository: DynamoLeadsRepository) { }
-
   async execute() {
     const totalAmountOfLeads = 100
 
@@ -16,7 +14,7 @@ export class PopulateDynamoService {
           jobTitle: faker.person.jobTitle(),
         })
 
-        await this.leadsRepository.store(lead)
+        await DynamoLeadsRepo.createLead(lead)
       }),
     )
 

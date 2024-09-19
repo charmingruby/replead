@@ -10,6 +10,7 @@ provider:
   environment:
     DYNAMO_LEADS_TABLE: !Ref LeadsTable
     GENERATE_REPORT_QUEUE_URL: !Ref GenerateReportQueue
+    REPORTS_BUCKET_NAME: !Ref ReportsBucket
   iam:
     role:
       statements:
@@ -23,6 +24,12 @@ provider:
           Action:
             - sqs:SendMessage
           Resource: !GetAtt GenerateReportQueue.Arn
+        - Effect: Allow
+          Action:
+            - s3:PutObject
+            - s3:AbortMultipartUpload
+          Resource: !Join ["/", [!GetAtt ReportsBucket.Arn, "*"]]
+
 package:
   individually: true
 

@@ -1,19 +1,23 @@
 import { env } from '@/config/env'
 import { Lead } from '@/domain/entities/lead'
-import { LeadsRepository } from '@/domain/repositories/leads-repository'
-import { DynamoDBClient, PutItemCommand } from '@aws-sdk/client-dynamodb'
-import { DynamoLeadsMapper } from '../mappers/dynamo-leads-mapper'
+import { paginateScan, PutItemCommand } from '@aws-sdk/client-dynamodb'
 import { dynamoClient } from '../client'
+import { DynamoLeadsMapper } from '../mappers/dynamo-leads-mapper'
 
-export class DynamoLeadsRepository implements LeadsRepository {
-  constructor(private readonly dynamoClient: DynamoDBClient) { }
+async function createLead(lead: Lead) {
+  const cmd = new PutItemCommand({
+    TableName: env.DYNAMO_LEADS_TABLE,
+    Item: DynamoLeadsMapper.toDynamo(lead),
+  })
 
-  async store(lead: Lead): Promise<void> {
-    const cmd = new PutItemCommand({
-      TableName: env.DYNAMO_LEADS_TABLE,
-      Item: DynamoLeadsMapper.toDynamo(lead),
-    })
-
-    await dynamoClient.send(cmd)
-  }
+  await dynamoClient.send(cmd)
 }
+
+function getLeadsPaginator() {
+  return paginateScan(
+    { client: this.dynamoClient },
+    { TableName: env.DYNAMO_LEADS_TABLE },
+  )
+}
+
+export { createLead, getLeadsPaginator }
